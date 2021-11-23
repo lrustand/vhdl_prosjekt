@@ -59,6 +59,7 @@ begin
                     bypass_mux <= '0';
                     state := 3;
                 elsif input = 26 then -- Enter
+                    bypass_mux <= '1';
                     state := 5;
                 end if;
             end if;
@@ -79,7 +80,27 @@ begin
             end if;
             state := 2;
         elsif state = 5 then
+            ram_write <= '1';
+            ram_cnt_clr <= '1';
+            state := 6;
         elsif state = 6 then
+            ram_write <= '0';
+            ram_cnt_clr <= '0';
+            bypass_mux <= '0';
+            ram_write <= '0';
+            tx_en <= '1';
+            ram_cnt_inc <='1';
+            if input_char = 26 then
+                state := 0;
+            else
+                state := 7;
+            end if;
+        elsif state = 7 then
+            tx_en <= '0';
+            ram_cnt_inc <='0';
+            if tx_done = '1' then
+                state := 6;
+            end if;
         end if;
     end process;
 end arch;
