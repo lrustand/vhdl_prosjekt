@@ -33,7 +33,7 @@ end entity control_path;
 architecture arch of control_path is
     variable state : std_logic_vector(2 downto 0) := 0;
 begin
-    process
+    process(clk)
     begin
         if state = 0 then
             rotor_roms_cnt_inc <= clk;
