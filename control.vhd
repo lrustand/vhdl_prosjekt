@@ -19,7 +19,7 @@ entity control_path is
         ram_write : out std_logic;
         bypass_mux : out std_logic;
         loopback_mux : out std_logic;
-        loopback_reg : out std_logic;
+        loopback_reg_load : out std_logic;
         load_wheels : out std_logic;
         wheel_roms_cnt_clr : out std_logic;
         wheel_roms_cnt_inc : out std_logic;
@@ -58,7 +58,11 @@ begin
                 end if;
             end if;
         elsif state = 3 then
+            loopback_mux <= '1';
+            loopback_reg_load <= '1';
+            state := 4;
         elsif state = 4 then
+            loopback_reg_load <= '0';
         elsif state = 5 then
         elsif state = 6 then
         end if;
