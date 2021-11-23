@@ -24,6 +24,9 @@ entity control_path is
         rotor_roms_cnt_clr : out std_logic;
         rotor_roms_cnt_inc : out std_logic;
 
+        rotor_i_rst : out std_logic;
+        rotor_j_rst : out std_logic;
+        rotor_k_rst : out std_logic;
         rotor_i_shift : out std_logic;
         rotor_j_shift : out std_logic;
         rotor_k_shift : out std_logic);
@@ -48,7 +51,15 @@ begin
             ram_cnt_clr <= '1';
             state :=2;
         elsif state = 2 then
-            loopback_mux <= 0;
+            loopback_mux <= '0';
+            ram_write <= '0';
+            ram_cnt_inc <= '0';
+            rotor_i_shift <= '0';
+            rotor_j_shift <= '0';
+            rotor_k_shift <= '0';
+            rotor_i_rst <= '0';
+            rotor_j_rst <= '0';
+            rotor_k_rst <= '0';
             if rx_done = '1' then
                 if input_char < 26 then
                     bypass_mux <= '0';
@@ -63,6 +74,21 @@ begin
             state := 4;
         elsif state = 4 then
             loopback_reg_load <= '0';
+            ram_write <= '1';
+            ram_cnt_inc <= '1';
+            rotor_i_shift <= '1';
+            if rotor_i_cnt > 25 then
+                rotor_i_rst <= '1';
+                rotor_j_shift <= '1';
+                if rotor_j_cnt > 25 then
+                    rotor_j_rst <= '1';
+                    rotor_k_shift <= '1';
+                    if rotor_k_cnt > 25 then
+                        rotor_k_rst <= '1';
+                    end if;
+                end if;
+            end if;
+            state := 2;
         elsif state = 5 then
         elsif state = 6 then
         end if;
