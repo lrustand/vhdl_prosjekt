@@ -61,10 +61,12 @@ begin
         elsif state = 2 then
             loopback_mux <= '0';
             if rx_done = '1' then
-                if input_char < 26 then
+                if (input_char >= 65 and input_char <= 90) or
+                   (input_char >= 97 and input_char <= 122) then
+
                     bypass_mux <= '0';
                     state := 3;
-                elsif input = 26 then -- Enter
+                elsif input = 13 then -- Enter
                     bypass_mux <= '1';
                     state := 5;
                 end if;
