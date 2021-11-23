@@ -71,6 +71,8 @@ begin
     wait for clk_period*20;
     test_in <= "01110111";
     wait for clk_period*20;
+    test_in <= "00001101";
+    wait for clk_period*20;
     end process;
     
 
