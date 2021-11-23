@@ -43,8 +43,20 @@ begin
                 load_wheels <= clk;
             end if;
         elsif state = 1 then
-
+            load_wheels <= '0';
+            wheel_roms_cnt_clr <= '1';
+            ram_cnt_clr <= '1';
+            state :=2;
         elsif state = 2 then
+            loopback_mux <= 0;
+            if rx_done = '1' then
+                if input_char < 26 then
+                    bypass_mux <= '0';
+                    state := 3;
+                elsif input = 26 then -- Enter
+                    state := 5;
+                end if;
+            end if;
         elsif state = 3 then
         elsif state = 4 then
         elsif state = 5 then
