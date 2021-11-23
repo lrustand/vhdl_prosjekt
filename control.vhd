@@ -35,6 +35,18 @@ architecture arch of control_path is
 begin
     process(clk)
     begin
+        tx_en <= '0';
+        ram_cnt_clr <= '0';
+        ram_cnt_inc <= '0';
+        ram_write <= '0';
+        loopback_reg_load <= '0';
+        load_rotors <= '0';
+        rotor_roms_cnt_clr <= '0';
+        rotor_roms_cnt_inc <= '0';
+        rotor_i_shift <= '0';
+        rotor_j_shift <= '0';
+        rotor_k_shift <= '0';
+
         if state = 0 then
             rotor_roms_cnt_inc <= clk;
             if rotor_roms_cnt > 25 then
@@ -43,17 +55,11 @@ begin
                 load_rotors <= clk;
             end if;
         elsif state = 1 then
-            load_rotors <= '0';
             rotor_roms_cnt_clr <= '1';
             ram_cnt_clr <= '1';
             state :=2;
         elsif state = 2 then
             loopback_mux <= '0';
-            ram_write <= '0';
-            ram_cnt_inc <= '0';
-            rotor_i_shift <= '0';
-            rotor_j_shift <= '0';
-            rotor_k_shift <= '0';
             if rx_done = '1' then
                 if input_char < 26 then
                     bypass_mux <= '0';
@@ -68,7 +74,6 @@ begin
             loopback_reg_load <= '1';
             state := 4;
         elsif state = 4 then
-            loopback_reg_load <= '0';
             ram_write <= '1';
             ram_cnt_inc <= '1';
             rotor_i_shift <= '1';
@@ -84,10 +89,7 @@ begin
             ram_cnt_clr <= '1';
             state := 6;
         elsif state = 6 then
-            ram_write <= '0';
-            ram_cnt_clr <= '0';
             bypass_mux <= '0';
-            ram_write <= '0';
             tx_en <= '1';
             ram_cnt_inc <='1';
             if input_char = 26 then
@@ -96,8 +98,6 @@ begin
                 state := 7;
             end if;
         elsif state = 7 then
-            tx_en <= '0';
-            ram_cnt_inc <='0';
             if tx_done = '1' then
                 state := 6;
             end if;
