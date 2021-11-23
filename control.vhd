@@ -24,9 +24,6 @@ entity control_path is
         rotor_roms_cnt_clr : out std_logic;
         rotor_roms_cnt_inc : out std_logic;
 
-        rotor_i_rst : out std_logic;
-        rotor_j_rst : out std_logic;
-        rotor_k_rst : out std_logic;
         rotor_i_shift : out std_logic;
         rotor_j_shift : out std_logic;
         rotor_k_shift : out std_logic);
@@ -57,9 +54,6 @@ begin
             rotor_i_shift <= '0';
             rotor_j_shift <= '0';
             rotor_k_shift <= '0';
-            rotor_i_rst <= '0';
-            rotor_j_rst <= '0';
-            rotor_k_rst <= '0';
             if rx_done = '1' then
                 if input_char < 26 then
                     bypass_mux <= '0';
@@ -78,14 +72,9 @@ begin
             ram_cnt_inc <= '1';
             rotor_i_shift <= '1';
             if rotor_i_cnt > 25 then
-                rotor_i_rst <= '1';
                 rotor_j_shift <= '1';
                 if rotor_j_cnt > 25 then
-                    rotor_j_rst <= '1';
                     rotor_k_shift <= '1';
-                    if rotor_k_cnt > 25 then
-                        rotor_k_rst <= '1';
-                    end if;
                 end if;
             end if;
             state := 2;
