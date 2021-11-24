@@ -45,9 +45,9 @@ begin
     process(clk)
     begin
         if ascii_in(7 downto 5) >= "010" and ascii_in(4 downto 0) > "0001" and ascii_in(4 downto 0) < "11011" then
-            converted_ascii <= "000" & std_logic_vector( unsigned(ascii_in(4 downto 0)) - "1" );
-        elsif ascii_in = "00001101" then
-            converted_ascii <= ascii_in;
+            converted_ascii <= std_logic_vector( unsigned(ascii_in(4 downto 0)) - "1" );
+        elsif ascii_in = "01101" then
+            converted_ascii <= ascii_in(4 downto 0);
         end if;
     end process;
 
