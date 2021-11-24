@@ -41,7 +41,7 @@ architecture Behavioral of five_bit_to_ascii_tb is
 component five_bit_to_ascii
 port(
     clk: in std_logic;
-    five_bit_in: std_logic_vector(4 downto 0);
+    five_bit_in: in std_logic_vector(4 downto 0);
     ascii_out: out std_logic_vector(7 downto 0)
 );
 end component;
