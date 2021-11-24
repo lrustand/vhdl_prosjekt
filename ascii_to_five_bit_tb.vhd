@@ -42,11 +42,11 @@ component ascii_to_five_bit
 port(
     clk: in std_logic;
     ascii_in: in std_logic_vector(7 downto 0);
-    converted_ascii: out std_logic_vector(7 downto 0)
+    converted_ascii: out std_logic_vector(4 downto 0)
 );
 end component;
 signal clk: std_logic;
-signal test_in, test_converted: std_logic_vector(7 downto 0);
+signal test_in, test_converted: std_logic_vector(4 downto 0);
 
 begin
     uut: ascii_to_five_bit port map (
