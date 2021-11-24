@@ -9,7 +9,7 @@ entity rotor_rom_V is
 end rotor_rom_V;
 
 architecture Behavioral of rotor_rom_V is
-    type rom_type is array(0 to 31)
+    type rom_type is array(0 to 25)
         of std_logic_vector(4 downto 0);
     -- ROM definition
     constant ROM1: rom_type:=(
