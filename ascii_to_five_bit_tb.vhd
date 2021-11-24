@@ -20,7 +20,7 @@
 
 
 library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+use ieee.std_logic_1164.all;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -49,32 +49,30 @@ signal clk: std_logic;
 signal test_in, test_converted: std_logic_vector(7 downto 0);
 
 begin
-
     uut: ascii_to_five_bit port map (
         clk=>clk,
         ascii_in=>test_in,
         converted_ascii=>test_converted);
     
     clk_prosess: process
-    begin
-    clk<='0';
-    wait for clk_period/2;
-    clk<='1';
-    wait for clk_period/2;
-    end process;
+        begin
+        clk<='0';
+        wait for clk_period/2;
+        clk<='1';
+        wait for clk_period/2;
+        end process;
     
     strim: process
-    begin
-    test_in <= "01001100";
-    wait for clk_period*20;
-    test_in <= "01101010";
-    wait for clk_period*20;
-    test_in <= "01110111";
-    wait for clk_period*20;
-    test_in <= "00001101";
-    wait for clk_period*20;
+        begin
+        test_in <= "01001100";
+        wait for clk_period*20;
+        test_in <= "01101010";
+        wait for clk_period*20;
+        test_in <= "01110111";
+        wait for clk_period*20;
+        test_in <= "00001101";
+        wait for clk_period*20;
+        wait;
     end process;
-    
-
 
 end Behavioral;

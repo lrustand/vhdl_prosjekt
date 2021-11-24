@@ -20,8 +20,9 @@
 
 
 library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
+
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
 --use IEEE.NUMERIC_STD.ALL;
@@ -35,7 +36,7 @@ entity ascii_to_five_bit is
     Port (
             clk: in std_logic;
             ascii_in: in std_logic_vector(7 downto 0);
-            converted_ascii: out std_logic_vector(7 downto 0));
+            converted_ascii: out std_logic_vector(4 downto 0));
 end ascii_to_five_bit;
 
 architecture Behavioral of ascii_to_five_bit is
@@ -43,9 +44,9 @@ architecture Behavioral of ascii_to_five_bit is
 begin
     process(clk)
     begin
-        if ( ascii_in(7 downto 5) >= "010" and ascii_in(4 downto 0) > "0001" and ascii_in(4 downto 0) < "11011" ) then
+        if ascii_in(7 downto 5) >= "010" and ascii_in(4 downto 0) > "0001" and ascii_in(4 downto 0) < "11011" then
             converted_ascii <= "000" & std_logic_vector( unsigned(ascii_in(4 downto 0)) - "1" );
-        elsif ( ascii_in = "00001101" ) then
+        elsif ascii_in = "00001101" then
             converted_ascii <= ascii_in;
         end if;
     end process;
