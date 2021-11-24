@@ -13,7 +13,7 @@ end rotor;
 
 architecture Behavioral of rotor is
     constant LETTERS: integer := 26;
-    signal index, downscale1, downscale2: std_logic_vector(addr_in1'length-1 downto 0);
+    signal index: std_logic_vector(addr_in1'length-1 downto 0);
     signal add_mod_ext1a, add_mod_ext1b, add_mod_ext2a, add_mod_ext2b: std_logic_vector(addr_in1'length downto 0);
 begin
     process(rst, inc) begin
