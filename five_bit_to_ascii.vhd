@@ -20,7 +20,7 @@
 
 
 library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 -- Uncomment the following library declaration if using
@@ -42,6 +42,6 @@ end five_bit_to_ascii;
 architecture Behavioral of five_bit_to_ascii is
 
 begin
-ascii_out<= "011" & std_logic_vector(unsigned(five_bit_in) + "1");
+    ascii_out<="011" & std_logic_vector(unsigned(five_bit_in) + "1");
 
 end Behavioral;
