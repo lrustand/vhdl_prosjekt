@@ -20,7 +20,7 @@
 
 
 library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
 
 -- Uncomment the following library declaration if using
@@ -39,15 +39,14 @@ entity enigma_counter is
 end enigma_counter;
 
 architecture Behavioral of enigma_counter is
-
 begin
-process(clk)
-begin
-    if(rst = '1') then
-        cnt<=(others => '0');
-    elsif ( rising_edge(clk) ) then
-        cnt <= cnt + '1';
-    end if;
-end process;
+    process(clk)
+    begin
+        if(rst = '1') then
+            cnt<=(others => '0');
+        elsif ( rising_edge(clk) ) then
+            cnt <= cnt + '1';
+        end if;
+    end process;
 
 end Behavioral;
