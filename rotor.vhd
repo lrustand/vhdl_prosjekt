@@ -18,7 +18,7 @@ begin
     process(rst, inc) begin
         if(rst='1') then
             index <= "00000";
-        elsif(inc'event and inc='1') then
+        elsif(rising_edge(inc)) then
             index <= std_logic_vector(unsigned(index + '1') mod LETTERS);
         end if;
     end process;
