@@ -20,7 +20,7 @@
 
 
 library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
+use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 -- Uncomment the following library declaration if using
@@ -40,19 +40,18 @@ entity enigma_ram is
 end enigma_ram;
 
 architecture Behavioral of enigma_ram is
-type ram_t is array(2**addr'length-1 downto 0) of std_logic_vector(din'length-1 downto 0);
-signal ram: ram_t;
-
+    type ram_t is array(2**addr'length-1 downto 0) of std_logic_vector(din'length-1 downto 0);
+    signal ram: ram_t;
 
 begin
-process (clk)
-begin
-    if rising_edge(clk) then
-        if (wr='1') then
-            ram (to_integer(unsigned(addr))) <= din;
-         end if;
-    end if;
-end process;
+    process (clk)
+    begin
+        if rising_edge(clk) then
+            if (wr='1') then
+                ram (to_integer(unsigned(addr))) <= din;
+            end if;
+        end if;
+    end process;
 dout <= ram (to_integer(unsigned(addr)));
 
 end Behavioral;
