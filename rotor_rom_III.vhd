@@ -39,7 +39,6 @@ architecture Behavioral of rotor_rom_III is
         "10010", -- addr 23
         "10000", -- addr 24
         "01110"  -- addr 25
-
     );
     constant ROM2: rom_type:=(
         "10011", -- addr 00
