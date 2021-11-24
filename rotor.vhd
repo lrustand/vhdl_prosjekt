@@ -6,7 +6,7 @@ use IEEE.std_logic_unsigned.all;
 entity rotor is
     -- Size of vectors will be automatically assigned based on external port mapping, comments bellow are the expected values
     port(        rom_data1, rom_data2, addr_in1, addr_in2: in std_logic_vector(4 downto 0);
-                                             rst, we, inc: in std_logic;
+                                                 rst, inc: in std_logic;
         rom_addr1, rom_addr2, addr_out1, addr_out2, index: out std_logic_vector(4 downto 0)
     );
 end rotor;
