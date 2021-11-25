@@ -1,4 +1,4 @@
-library IEEE;
+library ieee;
 use ieee.std_logic_1164.all;
 
 entity ascii_to_five_bit_tb is
