@@ -49,8 +49,10 @@ begin
         rotor_i_shift <= '0';
         rotor_j_shift <= '0';
         rotor_k_shift <= '0';
+        rotor_rst <= '0';
 
         if state = INIT then
+            bypass_mux <= '0';
             rotors_rst <= '1';
             ram_cnt_clr <= '1';
             state <= READ;
@@ -75,9 +77,9 @@ begin
             ram_write <= '1';
             ram_cnt_inc <= '1';
             rotor_i_shift <= '1';
-            if rotor_i_cnt > "11001" then
+            if rotor_i_cnt = "11001" then
                 rotor_j_shift <= '1';
-                if rotor_j_cnt > "11001" then
+                if rotor_j_cnt = "11001" then
                     rotor_k_shift <= '1';
                 end if;
             end if;
@@ -87,7 +89,6 @@ begin
             ram_cnt_clr <= '1';
             state <= TX_START;
         elsif state = TX_START then
-            bypass_mux <= '0';
             tx_en <= '1';
             ram_cnt_inc <='1';
             if input_char = x"0d" then
