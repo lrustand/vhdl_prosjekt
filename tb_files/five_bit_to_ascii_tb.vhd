@@ -1,5 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
+use IEEE.numeric_std.all;
 
 entity five_bit_to_ascii_tb is
 --  Port ( );

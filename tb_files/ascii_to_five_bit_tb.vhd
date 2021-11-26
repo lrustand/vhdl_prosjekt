@@ -1,5 +1,6 @@
 library ieee;
 use ieee.std_logic_1164.all;
+use IEEE.numeric_std.all;
 
 entity ascii_to_five_bit_tb is
 --  Port ( );
@@ -36,7 +37,7 @@ begin
 
     strim: process
     begin
-        test_in <= x"4c";
+        test_in <=x"4c";
         wait for clk_period*20;
         test_in <= x"69";
         wait for clk_period*20;
