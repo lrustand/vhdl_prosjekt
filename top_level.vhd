@@ -3,7 +3,7 @@ use IEEE.std_logic_1164.all;
 
 entity top_level is
     port ( 
-		clk, rst, din : in std_logic;
+        clk, rst, din : in std_logic;
         dout          : out std_logic
         );
 end top_level;
@@ -35,18 +35,18 @@ architecture arch of top_level is
     signal bypass_mux        : std_logic;
     signal loopback_mux      : std_logic;
     signal loopback_reg_load : std_logic;
-	
+    
     signal rotor_rst         : std_logic;
     signal rotor_i_shift     : std_logic;
     signal rotor_j_shift     : std_logic;
     signal rotor_k_shift     : std_logic
-	
-	signal loopback_reg_out  : std_logic_vector(4 downto 0);
-	signal plugboard_in      : std_logic_vector(4 downto 0);
-	signal ram_in            : std_logic_vector(7 downto 0);
-	signal ram_out           : std_logic_vector(7 downto 0);
-	
-	signal rom_data11, rom_data21, addr_in11, addr_in21   : std_logic_vector(4 downto 0);
+    
+    signal loopback_reg_out  : std_logic_vector(4 downto 0);
+    signal plugboard_in      : std_logic_vector(4 downto 0);
+    signal ram_in            : std_logic_vector(7 downto 0);
+    signal ram_out           : std_logic_vector(7 downto 0);
+    
+    signal rom_data11, rom_data21, addr_in11, addr_in21   : std_logic_vector(4 downto 0);
     signal we1, inc1                                      : std_logic;
     signal rom_addr11, rom_addr21, addr_out11, addr_out21 : std_logic_vector(4 downto 0);
     signal addr11, addr21                                 : std_logic_vector(4 downto 0);
@@ -67,8 +67,8 @@ architecture arch of top_level is
 -----------------------------------------------------------------------------------------------------------
 begin
 
-	plugboard_in <= converted_ascii when loopback_mux = '0' else loopback_reg_out;
-	ram_in <= ascii_out when bypass_mux = '0' else converted_ascii;
+    plugboard_in <= converted_ascii when loopback_mux = '0' else loopback_reg_out;
+    ram_in <= ascii_out when bypass_mux = '0' else converted_ascii;
 
 -- Control path
     control: entity work.control_path(arch)
@@ -81,14 +81,14 @@ begin
 -- ASCII converter (to five bit)
     ascii_to_five_bit: entity work.ascii_to_five_bit(Behavioral)
         port map(clk => clk, ascii_in => rx, converted_ascii => converted_ascii);
-					
+                    
 -- ASCII converter (to ASCII)
     five_bit_to_ascii: entity work.five_bit_to_ascii(Behavioral)
         port map(clk => clk, five_bit_in => char_out, ascii_out => ascii_out);
 
 -- Loopback register
-	loopback_reg: entity work.reg5(arch)
-		port map(clk => clk, rst => rst, clr => '0', load => loopback_reg_load, din => data21, dout => loopback_reg_out);
+    loopback_reg: entity work.reg5(arch)
+        port map(clk => clk, rst => rst, clr => '0', load => loopback_reg_load, din => data21, dout => loopback_reg_out);
 
 -- Plugboard
     plugboard: entity work.plugboard(arch)
