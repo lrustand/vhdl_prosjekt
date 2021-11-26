@@ -39,7 +39,7 @@ architecture arch of top_level is
     signal rotor_rst         : std_logic;
     signal rotor_i_shift     : std_logic;
     signal rotor_j_shift     : std_logic;
-    signal rotor_k_shift     : std_logic
+    signal rotor_k_shift     : std_logic;
     
     signal loopback_reg_out  : std_logic_vector(4 downto 0);
     signal plugboard_in      : std_logic_vector(4 downto 0);
