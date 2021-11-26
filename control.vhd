@@ -4,26 +4,26 @@ use IEEE.std_logic_1164.all;
 
 entity control_path is
     port (
-        clk : in std_logic;
-        input_char : in std_logic_vector(7 downto 0);
-        rx_done : in std_logic;
-        tx_done : in std_logic;
-        rotor_i_cnt : in std_logic_vector(4 downto 0);
-        rotor_j_cnt : in std_logic_vector(4 downto 0);
-        rotor_k_cnt : in std_logic_vector(4 downto 0);
+        clk: in std_logic;
+        input_char: in std_logic_vector(7 downto 0);
+        rx_done: in std_logic;
+        tx_done: in std_logic;
+        rotor_i_cnt: in std_logic_vector(4 downto 0);
+        rotor_j_cnt: in std_logic_vector(4 downto 0);
+        rotor_k_cnt: in std_logic_vector(4 downto 0);
 
-        tx_en : out std_logic;
-        ram_cnt_clr : out std_logic;
-        ram_cnt_inc : out std_logic;
-        ram_write : out std_logic;
-        bypass_mux : out std_logic;
-        loopback_mux : out std_logic;
-        loopback_reg_load : out std_logic;
-        rotors_rst : out std_logic;
+        tx_en: out std_logic;
+        ram_cnt_clr: out std_logic;
+        ram_cnt_inc: out std_logic;
+        ram_write: out std_logic;
+        bypass_mux: out std_logic;
+        loopback_mux: out std_logic;
+        loopback_reg_load: out std_logic;
+        rotors_rst: out std_logic;
 
-        rotor_i_shift : out std_logic;
-        rotor_j_shift : out std_logic;
-        rotor_k_shift : out std_logic);
+        rotor_i_shift: out std_logic;
+        rotor_j_shift: out std_logic;
+        rotor_k_shift: out std_logic);
 end entity control_path;
 
 
