@@ -12,9 +12,9 @@ architecture Behavioral of enigma_counter is
 begin
     process(clk)
     begin
-        if(rst = '1') then
-            cnt<=(others => '0');
-        elsif ( rising_edge(clk) ) then
+        if rst = '1' then
+            cnt <= (others => '0');
+        elsif rising_edge(clk) then
             cnt <= cnt + '1';
         end if;
     end process;
