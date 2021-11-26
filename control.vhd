@@ -49,7 +49,7 @@ begin
         rotor_i_shift <= '0';
         rotor_j_shift <= '0';
         rotor_k_shift <= '0';
-        rotor_rst <= '0';
+        rotors_rst <= '0';
 
         if state = INIT then
             bypass_mux <= '0';
