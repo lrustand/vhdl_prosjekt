@@ -28,7 +28,16 @@ end entity control_path;
 
 
 architecture arch of control_path is
-    signal state : std_logic_vector(2 downto 0) := "000";
+    type state_type is (
+        INIT,
+        READ,
+        LOOPBACK,
+        STORE,
+        ENDLINE,
+        TX_START,
+        TX_WAIT
+    );
+    signal state: state_type;
 begin
     process(clk)
     begin
@@ -41,28 +50,28 @@ begin
         rotor_j_shift <= '0';
         rotor_k_shift <= '0';
 
-        if state = "000" then
+        if state = INIT then
             rotors_rst <= '1';
             ram_cnt_clr <= '1';
-            state <="001";
-        elsif state = "001" then
+            state <= READ;
+        elsif state = READ then
             loopback_mux <= '0';
             if rx_done = '1' then
                 if (input_char >= x"41" and input_char <= x"5a") or
                    (input_char >= x"61" and input_char <= x"7a") then
 
                     bypass_mux <= '0';
-                    state <= "010";
+                    state <= LOOPBACK;
                 elsif input_char = x"0d" then -- Enter
                     bypass_mux <= '1';
-                    state <= "100";
+                    state <= ENDLINE;
                 end if;
             end if;
-        elsif state = "010" then
+        elsif state = LOOPBACK then
             loopback_mux <= '1';
             loopback_reg_load <= '1';
-            state <= "011";
-        elsif state = "011" then
+            state <= STORE;
+        elsif state = STORE then
             ram_write <= '1';
             ram_cnt_inc <= '1';
             rotor_i_shift <= '1';
@@ -72,23 +81,23 @@ begin
                     rotor_k_shift <= '1';
                 end if;
             end if;
-            state <= "001";
-        elsif state = "100" then
+            state <= READ;
+        elsif state = ENDLINE then
             ram_write <= '1';
             ram_cnt_clr <= '1';
-            state <= "101";
-        elsif state = "101" then
+            state <= TX_START;
+        elsif state = TX_START then
             bypass_mux <= '0';
             tx_en <= '1';
             ram_cnt_inc <='1';
             if input_char = x"0d" then
-                state <= "000";
+                state <= INIT;
             else
-                state <= "110";
+                state <= TX_WAIT;
             end if;
-        elsif state = "110" then
+        elsif state = TX_WAIT then
             if tx_done = '1' then
-                state <= "101";
+                state <= TX_START;
             end if;
         end if;
     end process;
