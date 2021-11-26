@@ -1,7 +1,0 @@
-v 4
-file . "ascii_to_five_bit.vhd" "38c04c4f8020fead866d828410fe7f6dcf2f3b0d" "20211124115744.939":
-  entity ascii_to_five_bit at 1( 0) + 0 on 27;
-  architecture behavioral of ascii_to_five_bit at 12( 271) + 0 on 28;
-file . "ascii_to_five_bit_tb.vhd" "0cc2d546a3f35d98ac047a669f8fecb69b2a888f" "20211124115727.617":
-  entity ascii_to_five_bit_tb at 1( 0) + 0 on 25;
-  architecture behavioral of ascii_to_five_bit_tb at 8( 116) + 0 on 26;
