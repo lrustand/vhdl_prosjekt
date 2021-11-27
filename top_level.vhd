@@ -46,28 +46,22 @@ architecture arch of top_level is
     signal ram_out           : std_logic_vector(7 downto 0);
     
     signal rotor_i_rom_data1, rotor_i_rom_data2 : std_logic_vector(4 downto 0);
-    signal rotor_i_addr_in1, rotor_i_addr_in2   : std_logic_vector(4 downto 0);
+    signal rotor_i_addr_in2                     : std_logic_vector(4 downto 0);
     signal rotor_i_rom_addr1, rotor_i_rom_addr2 : std_logic_vector(4 downto 0);
     signal rotor_i_addr_out1, rotor_i_addr_out2 : std_logic_vector(4 downto 0);
     signal rotor_i_inc                          : std_logic;
 
-    signal rom_I_data1, rom_I_data2, rom_I_addr1, rom_I_addr2         : std_logic_vector(4 downto 0);
-
     signal rotor_j_rom_data1, rotor_j_rom_data2 : std_logic_vector(4 downto 0);
-    signal rotor_j_addr_in1, rotor_j_addr_in2   : std_logic_vector(4 downto 0);
+    signal rotor_j_addr_in2                     : std_logic_vector(4 downto 0);
     signal rotor_j_rom_addr1, rotor_j_rom_addr2 : std_logic_vector(4 downto 0);
     signal rotor_j_addr_out1, rotor_j_addr_out2 : std_logic_vector(4 downto 0);
     signal rotor_j_inc                          : std_logic;
-
-    signal rom_II_data1, rom_II_data2, rom_II_addr1, rom_II_addr2     : std_logic_vector(4 downto 0);
     
     signal rotor_k_rom_data1, rotor_k_rom_data2 : std_logic_vector(4 downto 0);
-    signal rotor_k_addr_in1, rotor_k_addr_in2   : std_logic_vector(4 downto 0);
+    signal rotor_k_addr_in2                     : std_logic_vector(4 downto 0);
     signal rotor_k_rom_addr1, rotor_k_rom_addr2 : std_logic_vector(4 downto 0);
     signal rotor_k_addr_out1, rotor_k_addr_out2 : std_logic_vector(4 downto 0);
     signal rotor_k_inc                            : std_logic;
-
-    signal rom_III_data1, rom_III_data2, rom_III_addr1, rom_III_addr2 : std_logic_vector(4 downto 0);
 
 -----------------------------------------------------------------------------------------------------------
 begin
