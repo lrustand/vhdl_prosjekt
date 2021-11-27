@@ -22,18 +22,18 @@ constant rx_data_ascii_e: std_logic_vector(7 downto 0) := x"65"; -- receive e
 constant rx_data_ascii_enter: std_logic_vector(7 downto 0) := x"0D"; -- receive enter
 
 Component top_level
-Port ( reset, clk: in std_logic;
+Port ( rst, clk: in std_logic;
            din:      in std_logic;
            dout:     out std_logic);
 end Component;
 
-signal clk, reset: std_logic;
+signal clk, rst: std_logic;
 signal srx, stx: std_logic;
 
 begin
 
     uut: top_level
-    Port Map(clk => clk, reset => reset, 
+    Port Map(clk => clk, rst => rst, 
               din => srx, dout => stx);
     
     clk_process: process 
@@ -46,9 +46,9 @@ begin
         
      stim: process
         begin
-        reset <= '1';
+        rst <= '1';
         wait for clk_period*2;
-        reset <= '0';
+        rst <= '0';
         wait for clk_period*2;
         
         -- Test ASCII char m

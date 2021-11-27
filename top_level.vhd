@@ -10,10 +10,9 @@ end top_level;
 
 architecture arch of top_level is
     signal s_tick            : std_logic;
-    --signal tx                : std_logic;
     signal rx                : std_logic;
     signal converted_ascii   : std_logic_vector(4 downto 0);
-    signal char_out          : std_logic_vector(4 downto 0);
+    signal plugboard_out     : std_logic_vector(4 downto 0);
     signal five_bit_in       : std_logic_vector(4 downto 0);
     signal ascii_out         : std_logic_vector(7 downto 0);
     
@@ -46,28 +45,30 @@ architecture arch of top_level is
     signal ram_in            : std_logic_vector(7 downto 0);
     signal ram_out           : std_logic_vector(7 downto 0);
     
-    signal rom_data11, rom_data21, addr_in11, addr_in21   : std_logic_vector(4 downto 0);
-    signal we1, inc1                                      : std_logic;
-    signal rom_addr11, rom_addr21, addr_out11, addr_out21 : std_logic_vector(4 downto 0);
-    signal addr11, addr21                                 : std_logic_vector(4 downto 0);
-    signal data11, data21                                 : std_logic_vector(4 downto 0);
+    signal rotor_i_rom_data1, rotor_i_rom_data2        : std_logic_vector(4 downto 0);
+    signal rotor_i_rom_addr1, rotor_i_rom_addr2        : std_logic_vector(4 downto 0);
+    signal rotor_i_to_rotor_j, rotor_i_to_loopback_reg : std_logic_vector(4 downto 0);
+    signal rotor_i_inc                                 : std_logic;
 
-    signal rom_data12, rom_data22, addr_in12, addr_in22   : std_logic_vector(4 downto 0);
-    signal we2, inc2                                      : std_logic;
-    signal rom_addr12, rom_addr22, addr_out12, addr_out22 : std_logic_vector(4 downto 0);
-    signal addr12, addr22                                 : std_logic_vector(4 downto 0);
-    signal data12, data22                                 : std_logic_vector(4 downto 0);
+    signal rotor_j_rom_data1, rotor_j_rom_data2        : std_logic_vector(4 downto 0);
+    signal rotor_j_rom_addr1, rotor_j_rom_addr2        : std_logic_vector(4 downto 0);
+    signal rotor_j_to_rotor_k, rotor_j_to_rotor_i      : std_logic_vector(4 downto 0);
+    signal rotor_j_inc                                 : std_logic;
     
-    signal rom_data13, rom_data23, addr_in13, addr_in23   : std_logic_vector(4 downto 0);
-    signal we3, inc3                                      : std_logic;
-    signal rom_addr13, rom_addr23, addr_out13, addr_out23 : std_logic_vector(4 downto 0);
-    signal addr13, addr23                                 : std_logic_vector(4 downto 0);
-    signal data13, data23                                 : std_logic_vector(4 downto 0);
+    signal rotor_k_rom_data1, rotor_k_rom_data2        : std_logic_vector(4 downto 0);
+    signal reflector_to_rotor_k                        : std_logic_vector(4 downto 0);
+    signal rotor_k_rom_addr1, rotor_k_rom_addr2        : std_logic_vector(4 downto 0);
+    signal rotor_k_to_reflector, rotor_k_to_rotor_j    : std_logic_vector(4 downto 0);
+    signal rotor_k_inc                                 : std_logic;
+
+    signal s_tick_m                                      : std_logic_vector(8 downto 0);
 
 -----------------------------------------------------------------------------------------------------------
 begin
-
+-- Multiplexers
+    -- Loopback
     plugboard_in <= converted_ascii when loopback_mux = '0' else loopback_reg_out;
+    -- Bypass
     ram_in <= ascii_out when bypass_mux = '0' else converted_ascii;
 
 -- Control path
@@ -84,61 +85,65 @@ begin
                     
 -- ASCII converter (to ASCII)
     five_bit_to_ascii: entity work.five_bit_to_ascii(Behavioral)
-        port map(clk => clk, five_bit_in => char_out, ascii_out => ascii_out);
+        port map(clk => clk, five_bit_in => plugboard_out, ascii_out => ascii_out);
 
 -- Loopback register
     loopback_reg: entity work.reg5(arch)
-        port map(clk => clk, rst => rst, clr => '0', load => loopback_reg_load, din => data21, dout => loopback_reg_out);
+        port map(load => loopback_reg_load, din => rotor_i_to_loopback_reg, dout => loopback_reg_out,
+                  clk =>clk, rst=>rst, clr=>'0');
 
 -- Plugboard
     plugboard: entity work.plugboard(arch)
-        port map(char_in => plugboard_in, char_out => char_out);
+        port map(char_in => plugboard_in, char_out => plugboard_out);
 
--- Rotor I
-    rotorI: entity work.rotor(Behavioral)
-        port map(rom_data1 => rom_data11, rom_data2 => rom_data21, addr_in1 => addr_in11, addr_in2 => addr_in21,
-                 rst => rst, we => we1, inc => inc1, rom_addr1 => rom_addr11, rom_addr2 => rom_addr21, 
-                 addr_out1 => addr_out11, addr_out2 => addr_out21);
+-- Rotor i
+    rotor_i: entity work.rotor(Behavioral)
+        port map(rom_data1 => rotor_i_rom_data1, rom_data2 => rotor_i_rom_data2, addr_in1 => plugboard_out, 
+                 addr_in2 => rotor_j_to_rotor_i, rst => rotor_rst, inc => rotor_i_inc, rom_addr1 => rotor_i_rom_addr1,
+                 rom_addr2 => rotor_i_rom_addr2, addr_out1 => rotor_i_to_rotor_j, addr_out2 => rotor_i_to_loopback_reg, 
+                 index => rotor_i_cnt);
 
--- Rotor ROM I
     rotor_rom_I: entity work.rotor_rom_I(Behavioral)
-        port map(addr1 => char_out, addr2 => data22, data1 => data11, data2 => data21);
+        port map(addr1 => rotor_i_rom_addr1, addr2 => rotor_i_rom_addr2, data1 => rotor_i_rom_data1, 
+                 data2 => rotor_i_rom_data2);
 
--- Rotor II
-    rotorII: entity work.rotor(Behavioral)
-        port map(rom_data1 => rom_data12, rom_data2 => rom_data22, addr_in1 => addr_in1, addr_in2 => addr_in22,
-                 rst => rst, we => we2, inc => inc2, rom_addr1 => rom_addr12, rom_addr2 => rom_addr22, 
-                 addr_out1 => addr_out12, addr_out2 => addr_out22);
+-- Rotor j
+    rotor_j: entity work.rotor(Behavioral)
+        port map(rom_data1 => rotor_j_rom_data1, rom_data2 => rotor_j_rom_data2, addr_in1 => rotor_i_to_rotor_j,
+                 addr_in2 => rotor_k_to_rotor_j, rst => rotor_rst, inc => rotor_j_inc, rom_addr1 => rotor_j_rom_addr1,
+                 rom_addr2 => rotor_j_rom_addr2, addr_out1 => rotor_j_to_rotor_k, addr_out2 => rotor_j_to_rotor_i,
+                 index => rotor_j_cnt);
 
--- Rotor ROM II
     rotor_rom_II: entity work.rotor_rom_II(Behavioral)
-        port map(addr1 => data11, addr2 => data23, data1 => data12, data2 => data22);
+        port map(addr1 => rotor_j_rom_addr1, addr2 => rotor_j_rom_addr2, data1 => rotor_j_rom_data1,
+                 data2 => rotor_j_rom_data2);
 
--- Rotor III
-    rotorIII: entity work.rotor(Behavioral)
-        port map(rom_data1 => rom_data13, rom_data2 => rom_data23, addr_in1 => addr_in13, addr_in2 => addr_in23,
-                 rst => rst, we => we3, inc => inc3, rom_addr1 => rom_addr13, rom_addr2 => rom_addr23,
-                 addr_out1 => addr_out13, addr_out2 => addr_out23);
+-- Rotor k
+    rotor_k: entity work.rotor(Behavioral)
+        port map(rom_data1 => rotor_k_rom_data1, rom_data2 => rotor_k_rom_data2, addr_in1 => rotor_j_to_rotor_k,
+                 addr_in2 => reflector_to_rotor_k, rst => rotor_rst, inc => rotor_k_inc, rom_addr1 => rotor_k_rom_addr1,
+                 rom_addr2 => rotor_k_rom_addr2, addr_out1 => rotor_k_to_reflector, addr_out2 => rotor_k_to_rotor_j,
+                 index => rotor_k_cnt);
 
--- Rotor ROM III
     rotor_rom_III: entity work.rotor_rom_III(Behavioral)
-        port map(addr1 => data12, addr2 => addr23, data1 => data13, data2 => data23);
+        port map(addr1 => rotor_k_rom_addr1, addr2 => rotor_k_rom_addr2, data1 => rotor_k_rom_data1, 
+                 data2 => rotor_k_rom_data2);
 
 -- Reflector
     reflector: entity work.reflector(arch)
-        port map(char_in => data13, char_out => addr23 );
+        port map(char_in => rotor_k_to_reflector, char_out => reflector_to_rotor_k);
 
 -- RAM couner
-    ram_cnt: entity work.enigma_counter(Behavioral )
+    ram_cnt: entity work.enigma_counter(Behavioral)
         port map(clk => clk, rst => rst, cnt => cnt_out);
 
 -- RAM
-    ram: entity work.enigma_ram(Behavioral )
-        port map(clk => clk, addr => cnt_out, din => ram_in, dout => ram_out);
+    ram: entity work.enigma_ram(Behavioral)
+        port map(clk => clk, addr => cnt_out, din => ram_in, dout => ram_out, wr => wr);
 
 -- Mod-m counter
-    mod_m_cnt: entity work.mod_m_counter(arch)
-        port map(clk => clk, reset => rst, max_tick => s_tick, q => (others => '0'));
+    modm_cnt: entity work.mod_m_counter(arch)
+        port map(clk => clk, rst => rst, max_tick => s_tick, q => s_tick_m);
 
 -- UART receiver
     uart_rx: entity work.uart_rx(arch)
