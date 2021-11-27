@@ -1,7 +1,8 @@
 library IEEE;
 use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
-use IEEE.std_logic_unsigned.all;
+
+
 
 entity rotor is
     -- Size of vectors will be automatically assigned based on external port mapping, comments bellow are the expected values
@@ -21,18 +22,19 @@ begin
             index_signal <= "00000";
             index <= "00000";
         elsif(rising_edge(inc)) then
-            index_signal <= std_logic_vector(unsigned(index_signal + '1') mod LETTERS);
+            index_signal <= std_logic_vector((unsigned(index_signal) + 1) mod LETTERS);
+
         end if;
         index <= index_signal;
     end process;
 
-    rotate1 <= std_logic_vector(unsigned('0'&addr_in1 + index_signal) mod LETTERS);
+    rotate1 <= std_logic_vector((unsigned('0'&addr_in1) + unsigned(index_signal)) mod LETTERS);
     rom_addr1 <= rotate1(4 downto 0);
-    rotate_back1 <= std_logic_vector(unsigned('0'&rom_data1 + LETTERS - index_signal) mod LETTERS);
+    rotate_back1 <= std_logic_vector((unsigned('0'&rom_data1) + (LETTERS - unsigned(index_signal))) mod LETTERS);
     addr_out1 <= rotate_back1(4 downto 0);
 
-    rotate2 <= std_logic_vector(unsigned('0'&addr_in2 + index_signal) mod LETTERS);
+    rotate2 <= std_logic_vector((unsigned('0'&addr_in2) + unsigned(index_signal)) mod LETTERS);
     rom_addr2 <= rotate2(4 downto 0);
-    rotate_back2 <= std_logic_vector(unsigned('0'&rom_data2 + LETTERS - index_signal) mod LETTERS);
+    rotate_back2 <= std_logic_vector((unsigned('0'&rom_data2) + (LETTERS - unsigned(index_signal))) mod LETTERS);
     addr_out2 <= rotate_back2(4 downto 0);
 end Behavioral;
