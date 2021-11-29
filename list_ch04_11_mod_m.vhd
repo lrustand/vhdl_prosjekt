@@ -10,7 +10,6 @@ entity mod_m_counter is
    port(
       clk, reset: in std_logic;
       max_tick: out std_logic;
-      q: out std_logic_vector(N-1 downto 0)
    );
 end mod_m_counter;
 
@@ -31,6 +30,5 @@ begin
    r_next <= (others=>'0') when r_reg=(M-1) else
              r_reg + 1;
    -- output logic
-   q <= std_logic_vector(r_reg);
    max_tick <= '1' when r_reg=(M-1) else '0';
 end arch;
