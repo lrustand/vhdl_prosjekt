@@ -99,7 +99,9 @@ begin
         elsif state = TX_WAIT then
             if tx_done = '1' then
                 state <= TX_START;
+                ram_cnt_inc <= '1';
             end if;
+            tx_en <= '1';
         end if;
     end process;
 end arch;

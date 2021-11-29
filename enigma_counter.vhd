@@ -12,7 +12,7 @@ end enigma_counter;
 architecture Behavioral of enigma_counter is
     signal counter: unsigned(cnt'length - 1 downto 0);
 begin
-    process(clk)
+    process(clk, rst)
     begin
         if rst = '1' then
             counter <= (others => '0');
