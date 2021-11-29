@@ -6,6 +6,7 @@ entity control_path is
     port (
         clk: in std_logic;
         input_char: in std_logic_vector(7 downto 0);
+        ram_char: in std_logic_vector(7 downto 0);
         rx_done: in std_logic;
         tx_done: in std_logic;
         rotor_i_cnt: in std_logic_vector(4 downto 0);
@@ -90,7 +91,7 @@ begin
             state <= TX_START;
         elsif state = TX_START then
             tx_en <= '1';
-            if input_char = x"0d" then
+            if ram_char = x"0d" then
                 state <= INIT;
             else
                 state <= TX_WAIT;

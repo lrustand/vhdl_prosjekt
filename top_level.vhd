@@ -71,7 +71,7 @@ begin
 
 -- Control path
     control: entity work.control_path(arch)
-        port map(clk => clk, input_char => input_char, rx_done => rx_done, tx_done => tx_done,
+        port map(clk => clk, input_char => input_char, ram_char => ram_out, rx_done => rx_done, tx_done => tx_done,
                   rotor_i_cnt => rotor_i_cnt, rotor_j_cnt => rotor_j_cnt, rotor_k_cnt => rotor_k_cnt, tx_en => tx_en,
                   ram_cnt_clr => ram_cnt_clr, ram_cnt_inc => ram_cnt_inc, ram_write => ram_write, bypass_mux => bypass_mux,
                   loopback_mux => loopback_mux, loopback_reg_load => loopback_reg_load, rotors_rst => rotor_rst, 
