@@ -67,7 +67,7 @@ begin
     -- Loopback
     plugboard_in <= converted_ascii when loopback_mux = '0' else loopback_reg_out;
     -- Bypass
-    ram_in <= ascii_out when bypass_mux = '0' else converted_ascii;
+    ram_in <= ascii_out when bypass_mux = '0' else "000" & converted_ascii;
 
 -- Control path
     control: entity work.control_path(arch)
@@ -140,7 +140,7 @@ begin
 
 -- Mod-m counter
     modm_cnt: entity work.mod_m_counter(arch)
-        port map(clk => clk, reset => rst, max_tick => s_tick, q => (others => '0'));
+        port map(clk => clk, reset => rst, max_tick => s_tick);
 
 -- UART receiver
     uart_rx: entity work.uart_rx(arch)
