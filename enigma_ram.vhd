@@ -17,12 +17,10 @@ architecture Behavioral of enigma_ram is
     signal ram: ram_t;
 
 begin
-    process (clk)
+    process (wr)
     begin
-        if rising_edge(clk) then
-            if (wr='1') then
-                ram (to_integer(unsigned(addr))) <= din;
-            end if;
+        if rising_edge(wr) then
+            ram (to_integer(unsigned(addr))) <= din;
         end if;
     end process;
 dout <= ram (to_integer(unsigned(addr)));

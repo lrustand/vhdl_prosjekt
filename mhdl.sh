@@ -1,4 +1,6 @@
 #!/bin/sh
+ghdl -a *.vhd
+ghdl -e $1
 
 ghdl -e --ieee=synopsys $1
 ghdl -a --ieee=synopsys tb_files/$1_tb.vhd

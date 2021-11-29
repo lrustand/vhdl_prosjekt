@@ -3,7 +3,6 @@ use IEEE.std_logic_1164.all;
 use IEEE.numeric_std.all;
 
 
-
 entity rotor is
     -- Size of vectors will be automatically assigned based on external port mapping, comments bellow are the expected values
     port(rst, inc: in std_logic;

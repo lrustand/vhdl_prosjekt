@@ -90,7 +90,6 @@ begin
             state <= TX_START;
         elsif state = TX_START then
             tx_en <= '1';
-            ram_cnt_inc <='1';
             if input_char = x"0d" then
                 state <= INIT;
             else

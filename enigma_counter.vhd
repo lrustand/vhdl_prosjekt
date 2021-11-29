@@ -3,7 +3,6 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 
-
 entity enigma_counter is
     Port ( 
         clk, rst: in std_logic;

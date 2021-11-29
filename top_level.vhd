@@ -61,8 +61,6 @@ architecture arch of top_level is
     signal rotor_k_to_reflector, rotor_k_to_rotor_j    : std_logic_vector(4 downto 0);
     signal rotor_k_inc                                 : std_logic;
 
-    signal s_tick_m                                      : std_logic_vector(8 downto 0);
-
 -----------------------------------------------------------------------------------------------------------
 begin
 -- Multiplexers
@@ -135,15 +133,15 @@ begin
 
 -- RAM couner
     ram_cnt: entity work.enigma_counter(Behavioral)
-        port map(clk => clk, rst => rst, cnt => cnt_out);
+        port map(clk => ram_cnt_inc, rst => ram_cnt_clr, cnt => cnt_out);
 
 -- RAM
     ram: entity work.enigma_ram(Behavioral)
-        port map(clk => clk, addr => cnt_out, din => ram_in, dout => ram_out, wr => wr);
+        port map(clk => clk, addr => cnt_out, din => ram_in, dout => ram_out, wr => ram_write);
 
 -- Mod-m counter
     modm_cnt: entity work.mod_m_counter(arch)
-        port map(clk => clk, rst => rst, max_tick => s_tick, q => s_tick_m);
+        port map(clk => clk, rst => rst, max_tick => s_tick);
 
 -- UART receiver
     uart_rx: entity work.uart_rx(arch)

@@ -9,8 +9,7 @@ entity mod_m_counter is
   );
    port(
       clk, rst: in std_logic;
-      max_tick: out std_logic;
-      q: out std_logic_vector(N-1 downto 0)
+      max_tick: out std_logic
    );
 end mod_m_counter;
 
