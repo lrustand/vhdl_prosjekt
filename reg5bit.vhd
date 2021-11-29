@@ -11,16 +11,12 @@ end reg5;
 
 architecture arch of reg5 is
 begin
-   process(clk, rst)
+   process(clk, rst, load)
    begin
         if (rst='1') then
             dout  <= (others => '0');
-        elsif rising_edge(clk) then
-            if (clr = '1') then
-                dout <= (others => '0');
-            elsif (load = '1') then
-                dout <= din ;
-            end if;
+        elsif rising_edge(load) then
+            dout <= din ;
         end if;
    end process;
 end arch;
