@@ -2,5 +2,5 @@
 
 int main()
 {
-	rotor_test();
+    rotor_test();
 }
