@@ -3,7 +3,7 @@
 
 void rotor_test()
 {
-	int i_wiring[] = {
+	int i_wiring[26] = {
 		0x15, // A -> V
 		0x19, // B -> Z
 		0x01, // C -> B
@@ -39,7 +39,7 @@ void rotor_test()
 	for(char c = 'A'; c <= 'Z'; c++)
 	{
 		int enc = i.lookup(c-'A');
-		int dec = 'A' + i.lookup(enc-'A');
+		int dec = 'A' + i.reverse_lookup(enc);
 		if(dec != c)
 		{
 			printf("Failed on %c with index %d: dec = %s!", c, i.index, dec);
