@@ -2,23 +2,17 @@
 
 class rotor
 {
-	int* arr;
-	int* inv;
-	int size;
+	int arr[26];
+	int inv[26];
 
 public:
 	int index = 0;
 
-	rotor(int arr[])
+	rotor(int* arr)
 	{
-		this->arr = arr;
-		this->size = *(&arr + 1) - arr;
-		printf("%d", this->size);
-	int a;
-	scanf("%d", a);
-		inv = new int[size];
-		for(int i = 0; i < size; i++)
+		for(int i = 0; i < 26; i++)
 		{
+                        this->arr[i] = arr[i];
 			inv[arr[i]] = i;
 		}
 	}
@@ -26,16 +20,16 @@ public:
 	void inc()
 	{
 		index++;
-		index %= size;
+		index %= 26;
 	}
 
 	int lookup(int x)
 	{
-		return (arr[(x + index)%size] + size - index)%size;
+		return (arr[(x + index)%26] + 26 - index)%26;
 	}
 
 	int reverse_lookup(int x)
 	{
-		return (inv[(x + index)%size] + size - index)%size;
+		return (inv[(x + index)%26] + 26 - index)%26;
 	}
 };
