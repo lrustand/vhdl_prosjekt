@@ -36,9 +36,6 @@ architecture arch of top_level is
     signal loopback_reg_load : std_logic;
     
     signal rotor_rst         : std_logic;
-    signal rotor_i_shift     : std_logic;
-    signal rotor_j_shift     : std_logic;
-    signal rotor_k_shift     : std_logic;
     
     signal loopback_reg_out  : std_logic_vector(4 downto 0);
     signal plugboard_in      : std_logic_vector(4 downto 0);
@@ -75,7 +72,7 @@ begin
                   rotor_i_cnt => rotor_i_cnt, rotor_j_cnt => rotor_j_cnt, rotor_k_cnt => rotor_k_cnt, tx_en => tx_en,
                   ram_cnt_clr => ram_cnt_clr, ram_cnt_inc => ram_cnt_inc, ram_write => ram_write, bypass_mux => bypass_mux,
                   loopback_mux => loopback_mux, loopback_reg_load => loopback_reg_load, rotors_rst => rotor_rst, 
-                  rotor_i_shift => rotor_i_shift, rotor_j_shift => rotor_j_shift, rotor_k_shift => rotor_k_shift);
+                  rotor_i_shift => rotor_i_inc, rotor_j_shift => rotor_j_inc, rotor_k_shift => rotor_k_inc);
 
 -- ASCII converter (to five bit)
     ascii_to_five_bit: entity work.ascii_to_five_bit(Behavioral)
