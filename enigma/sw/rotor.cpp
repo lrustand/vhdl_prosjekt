@@ -1,16 +1,17 @@
 #include <stdio.h>
+#include "glob.h"
 
 class rotor
 {
-    int arr[26];
-    int inv[26];
+    int arr[LETTERS];
+    int inv[LETTERS];
 
 public:
     int index = 0;
 
     rotor(int* arr)
     {
-        for(int i = 0; i < 26; i++)
+        for(int i = 0; i < LETTERS; i++)
         {
                         this->arr[i] = arr[i];
             inv[arr[i]] = i;
@@ -20,16 +21,16 @@ public:
     void inc()
     {
         index++;
-        index %= 26;
+        index %= LETTERS;
     }
 
     int lookup(int x)
     {
-        return (arr[(x + index)%26] + 26 - index)%26;
+        return (arr[(x + index)%LETTERS] + LETTERS - index)%LETTERS;
     }
 
     int reverse_lookup(int x)
     {
-        return (inv[(x + index)%26] + 26 - index)%26;
+        return (inv[(x + index)%LETTERS] + LETTERS - index)%LETTERS;
     }
 };

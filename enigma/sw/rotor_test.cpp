@@ -1,9 +1,10 @@
 #include "rotor.cpp"
+#include "glob.h"
 #include <stdio.h>
 
 void rotor_test()
 {
-    int i_wiring[26] = {
+    int i_wiring[LETTERS] = {
         0x15, // A -> V
         0x19, // B -> Z
         0x01, // C -> B
@@ -32,18 +33,35 @@ void rotor_test()
         0x0a  // Z -> K
     };
 
-    rotor i = rotor(i_wiring);
+    rotor rotor_i = rotor(i_wiring);
 
     bool success = true;
-
-    for(char c = 'A'; c <= 'Z'; c++)
+    for(int i = 0; i < LETTERS; i++)
     {
-        int enc = i.lookup(c-'A');
-        int dec = 'A' + i.reverse_lookup(enc);
-        if(dec != c)
+        for(char c = 'A'; c <= 'Z'; c++)
         {
-            printf("Failed on %c with index %d: dec = %s!", c, i.index, dec);
+            int enc = rotor_i.lookup(c-'A');
+            int dec = 'A' + rotor_i.reverse_lookup(enc);
+            if(dec != c)
+            {
+                printf("Failed symetry on %c with index %d: dec = %s!\n", c, rotor_i.index, dec);
+                success = false;
+            }
+            if(i_wiring[(c - 'A' + rotor_i.index)%LETTERS] != (enc + rotor_i.index)%LETTERS)
+            {
+                printf("Failed lookup on %c with index %d: enc = %s!\n", c, rotor_i.index, enc);
+                success = false;
+            }
         }
+        rotor_i.inc();
+    }
+    if(success)
+    {
+        printf("rotor passed all tests!\n");
+    }
+    else
+    {
+        printf("rotor has errors!\n");
     }
     int a;
     scanf("%d", a);
