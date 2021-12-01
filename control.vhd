@@ -51,7 +51,7 @@ begin
         rotor_j_shift <= '0';
         rotor_k_shift <= '0';
         rotors_rst <= '0';
-
+        if rising_edge(clk) then
         if state = INIT then
             bypass_mux <= '0';
             rotors_rst <= '1';
@@ -102,6 +102,7 @@ begin
                 ram_cnt_inc <= '1';
             end if;
             tx_en <= '1';
+        end if;
         end if;
     end process;
 end arch;
