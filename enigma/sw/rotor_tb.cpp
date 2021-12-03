@@ -15,7 +15,8 @@ bool symmetry_test(Rotor rotor)
 
             if(dec != c)
             {
-                printf("ERROR: Failed symmetry on %c with rotor index %d: dec = %c. Should be dec = %c.\n", c, rotor.index, dec, c);
+                printf("ERROR: Failed symmetry on %c with rotor index ", c);
+                printf("%d: dec = %c. Should be dec = %c.\n", rotor.index, dec, c);
                 success = false;
             }
         }
@@ -39,8 +40,10 @@ bool lookup_test(Rotor rotor, int wiring[])
 
             if(wiring[(c - 'A' + rotor.index)%LETTERS] != (enc + rotor.index)%LETTERS)
             {
-                int expected = (wiring[(c - 'A' + rotor.index)%LETTERS] + LETTERS - rotor.index)%LETTERS;
-                printf("ERROR: Failed lookup on %c with rotor index %d: enc = %d. Should be enc = %d.\n", c, rotor.index, enc, expected);
+                int lookup = wiring[(c - 'A' + rotor.index)%LETTERS];
+                int expected = (lookup + LETTERS - rotor.index)%LETTERS;
+                printf("ERROR: Failed lookup on %c with rotor index ", c);
+                printf("%d: enc = %d. Should be enc = %d.\n", rotor.index, enc, expected);
                 success = false;
             }
         }
