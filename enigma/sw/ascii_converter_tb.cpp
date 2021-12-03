@@ -30,6 +30,7 @@ bool test_from_ascii(char c, int expected)
 // Test double conversion
 bool test_conversion_consistency()
 {
+    printf("\nTesting double conversion consistency:\n");
     bool success = true;
     for (int i=0; i<26; i++) {
         int converted = from_ascii(to_ascii(i));
@@ -46,6 +47,7 @@ bool test_conversion_consistency()
             success = false;
         }
     }
+    if (success) printf("Pass\n");
     return success;
 }
 
@@ -55,6 +57,7 @@ int main()
     int failed_testcases = 0;
 
     // Test a few random int to char conversions
+    printf("\nTesting int to char conversion:\n");
     if (!test_to_ascii(0, 'A') ||
         !test_to_ascii(3, 'D') ||
         !test_to_ascii(25, 'Z'))
@@ -62,6 +65,10 @@ int main()
 
         failed_testcases++;
     }
+    else {
+        printf("Pass\n");
+    }
+
 
     // Test a few random char to int conversions
     if (!test_from_ascii('B', 1) ||
@@ -70,6 +77,9 @@ int main()
     {
 
         failed_testcases++;
+    }
+    else {
+        printf("Pass\n");
     }
 
     if (!test_conversion_consistency()) failed_testcases++;
