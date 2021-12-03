@@ -5,6 +5,7 @@
 // e.g. if A => Y, then Y => A should also be true
 bool test_reflector_consistency()
 {
+    printf("\nTesting reflector consistency:\n");
     bool success = true;
     for (const auto& [key, value] : reflector) {
         if (key != reflector[value]) {
@@ -13,6 +14,7 @@ bool test_reflector_consistency()
             success = false;
         }
     }
+    if (success) printf("Pass\n");
     return success;
 }
 
@@ -31,25 +33,31 @@ bool _verify(char key, char expected_value)
 // Tests a few random chars to see if they match the mapping of the real reflector
 bool test_reflector_correct_mapping()
 {
-    return
+    printf("\nTesting correctness of reflector mapping:\n");
+
+    bool success =
         _verify('A', 'Y') &&
         _verify('R', 'B') &&
         _verify('V', 'W') &&
         _verify('C', 'U');
+    if (success) printf("Pass\n");
+    return success;
 }
 
 
 int main()
 {
+    printf("Testing reflector\n");
+
     int failed_testcases = 0;
 
     failed_testcases += !test_reflector_consistency();
     failed_testcases += !test_reflector_correct_mapping();
 
     if (failed_testcases) {
-        printf("reflector_tb failed %d test(s).\n");
+        printf("\nreflector_tb failed %d test(s).\n\n");
     }
     else {
-        printf("reflector_tb passed all tests.\n");
+        printf("\nreflector_tb passed all tests.\n\n");
     }
 }
