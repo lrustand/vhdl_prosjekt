@@ -1,5 +1,6 @@
-#include <stdio.h>
+#include "globals.h"
 #include "plugboard.h"
+#include <stdio.h>
 
 // Test that the path through the plugboard is the same both ways,
 // e.g. if A => F, then F => A should also be true
@@ -7,7 +8,8 @@ bool test_plugboard_consistency()
 {
     printf("\nTesting plugboard consistency:\n");
     bool success = true;
-    for (const auto& [key, value] : plugboard) {
+    for (int key=0; key<LETTERS; key++) {
+        int value = plugboard[key];
         if (key != plugboard[value]) {
             printf("ERROR: %d => %d, but not %d => %d. ", key, value, value, key);
             printf("Actual %d => %d\n", value, plugboard[value]);
