@@ -86,7 +86,7 @@ int main()
 
 
     if (failed_testcases) {
-        printf("converter_tb failed %d test(s).\n");
+        printf("converter_tb failed %d test(s).\n", failed_testcases);
     }
     else {
         printf("converter_tb passed all tests.\n");
