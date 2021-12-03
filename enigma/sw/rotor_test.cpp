@@ -2,7 +2,7 @@
 #include "glob.h"
 #include <stdio.h>
 
-void rotor_test()
+void main()
 {
     int i_wiring[LETTERS] = {
         0x15, // A -> V
