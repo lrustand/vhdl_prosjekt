@@ -1,36 +1,27 @@
 #include <stdio.h>
-#include "glob.h"
+#include "rotor.h"
 
-class rotor
+Rotor::Rotor(int* arr)
 {
-    int arr[LETTERS];
-    int inv[LETTERS];
-
-public:
-    int index = 0;
-
-    rotor(int* arr)
+    for(int i = 0; i < LETTERS; i++)
     {
-        for(int i = 0; i < LETTERS; i++)
-        {
-                        this->arr[i] = arr[i];
-            inv[arr[i]] = i;
-        }
+                    this->arr[i] = arr[i];
+        inv[arr[i]] = i;
     }
+}
 
-    void inc()
-    {
-        index++;
-        index %= LETTERS;
-    }
+void Rotor::inc()
+{
+    index++;
+    index %= LETTERS;
+}
 
-    int lookup(int x)
-    {
-        return (arr[(x + index)%LETTERS] + LETTERS - index)%LETTERS;
-    }
+int Rotor::lookup(int x)
+{
+    return (arr[(x + index)%LETTERS] + LETTERS - index)%LETTERS;
+}
 
-    int reverse_lookup(int x)
-    {
-        return (inv[(x + index)%LETTERS] + LETTERS - index)%LETTERS;
-    }
-};
+int Rotor::reverse_lookup(int x)
+{
+    return (inv[(x + index)%LETTERS] + LETTERS - index)%LETTERS;
+}
