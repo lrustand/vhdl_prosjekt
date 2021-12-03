@@ -5,6 +5,7 @@
 // e.g. if A => F, then F => A should also be true
 bool test_plugboard_consistency()
 {
+    printf("\nTesting plugboard consistency:\n");
     bool success = true;
     for (const auto& [key, value] : plugboard) {
         if (key != plugboard[value]) {
@@ -13,15 +14,17 @@ bool test_plugboard_consistency()
             success = false;
         }
     }
+    if (success) printf("Pass\n");
     return success;
 }
 
 int main()
 {
+    printf("Testing plugboard\n");
     if (test_plugboard_consistency()) {
-        printf("plugboard_tb passed all tests.\n");
+        printf("\nplugboard_tb passed all tests.\n\n");
     }
     else {
-        printf("plugboard_tb failed 1 test(s).\n");
+        printf("\nplugboard_tb failed 1 test(s).\n\n");
     }
 }
