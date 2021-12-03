@@ -9,8 +9,8 @@ bool test_plugboard_consistency()
     bool success = true;
     for (const auto& [key, value] : plugboard) {
         if (key != plugboard[value]) {
-            printf("ERROR: %c = %c, but %c != %c. ", key, value, value, key);
-            printf("Actual %c = %c\n", value, plugboard[value]);
+            printf("ERROR: %c => %c, but not %c => %c. ", key, value, value, key);
+            printf("Actual %c => %c\n", value, plugboard[value]);
             success = false;
         }
     }
