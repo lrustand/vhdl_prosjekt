@@ -9,8 +9,8 @@ bool test_reflector_consistency()
     bool success = true;
     for (const auto& [key, value] : reflector) {
         if (key != reflector[value]) {
-            printf("ERROR: %c => %c, but not %c => %c. ", key, value, value, key);
-            printf("Actual %c => %c\n", value, reflector[value]);
+            printf("ERROR: %d => %d, but not %d => %d. ", key, value, value, key);
+            printf("Actual %d => %d\n", value, reflector[value]);
             success = false;
         }
     }
@@ -19,12 +19,12 @@ bool test_reflector_consistency()
 }
 
 // Helper function for verifying expected char mapping
-bool _verify(char key, char expected_value)
+bool _verify(int key, int expected_value)
 {
     bool success = true;
     char actual_value = reflector[key];
     if (actual_value != expected_value) {
-        printf("ERROR: %c does not map to %c, but is instead %c\n", key, expected_value, actual_value);
+        printf("ERROR: %d does not map to %d, but is instead %d\n", key, expected_value, actual_value);
         success = false;
     }
     return success;
@@ -36,10 +36,10 @@ bool test_reflector_correct_mapping()
     printf("\nTesting correctness of reflector mapping:\n");
 
     bool success =
-        _verify('A', 'Y') &&
-        _verify('R', 'B') &&
-        _verify('V', 'W') &&
-        _verify('C', 'U');
+        _verify(INT('A'), INT('Y')) &&
+        _verify(INT('R'), INT('B')) &&
+        _verify(INT('V'), INT('W')) &&
+        _verify(INT('C'), INT('U'));
     if (success) printf("Pass\n");
     return success;
 }
@@ -55,7 +55,7 @@ int main()
     failed_testcases += !test_reflector_correct_mapping();
 
     if (failed_testcases) {
-        printf("\nreflector_tb failed %d test(s).\n\n");
+        printf("\nreflector_tb failed %d test(s).\n\n", failed_testcases);
     }
     else {
         printf("\nreflector_tb passed all tests.\n\n");
