@@ -9,8 +9,8 @@ bool test_reflector_consistency()
     bool success = true;
     for (const auto& [key, value] : reflector) {
         if (key != reflector[value]) {
-            printf("ERROR: %c = %c, but %c != %c. ", key, value, value, key);
-            printf("Actual %c = %c\n", value, reflector[value]);
+            printf("ERROR: %c => %c, but not %c => %c. ", key, value, value, key);
+            printf("Actual %c => %c\n", value, reflector[value]);
             success = false;
         }
     }
@@ -24,7 +24,7 @@ bool _verify(char key, char expected_value)
     bool success = true;
     char actual_value = reflector[key];
     if (actual_value != expected_value) {
-        printf("ERROR: %c != %c, but is instead %c\n", key, expected_value, actual_value);
+        printf("ERROR: %c does not map to %c, but is instead %c\n", key, expected_value, actual_value);
         success = false;
     }
     return success;
