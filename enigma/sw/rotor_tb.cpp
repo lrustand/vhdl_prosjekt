@@ -1,5 +1,5 @@
 #include "rotor.h"
-#include "glob.h"
+#include "globals.h"
 #include <stdio.h>
 
 bool symmetry_test(Rotor rotor)

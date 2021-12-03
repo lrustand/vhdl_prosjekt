@@ -1,5 +1,5 @@
 #pragma once
-#include "glob.h"
+#include "globals.h"
 class Rotor
 {
 public:
