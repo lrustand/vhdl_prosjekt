@@ -10,6 +10,8 @@ public:
     int index = 0;
 
 private:
+    int rotate(int x);
+    int rotate_back(int x);
     int arr[LETTERS];
     int inv[LETTERS];
 };

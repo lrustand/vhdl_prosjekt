@@ -16,12 +16,27 @@ void Rotor::inc()
     index %= LETTERS;
 }
 
+int Rotor::rotate(int x)
+{
+    x += index;
+    x %= LETTERS;
+    return x;
+}
+
+int Rotor::rotate_back(int x)
+{
+    x += LETTERS;
+    x -= index;
+    x %= LETTERS;
+    return x;
+}
+
 int Rotor::lookup(int x)
 {
-    return (arr[(x + index)%LETTERS] + LETTERS - index)%LETTERS;
+    return rotate_back(arr[rotate(x)]);
 }
 
 int Rotor::reverse_lookup(int x)
 {
-    return (inv[(x + index)%LETTERS] + LETTERS - index)%LETTERS;
+    return rotate_back(inv[rotate(x)]);
 }
