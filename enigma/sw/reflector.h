@@ -1,31 +1,30 @@
 #include "globals.h"
-#include <map>
 
-std::map<int, int> reflector {
-    {INT('A'), INT('Y')},
-    {INT('B'), INT('R')},
-    {INT('C'), INT('U')},
-    {INT('D'), INT('H')},
-    {INT('E'), INT('Q')},
-    {INT('F'), INT('S')},
-    {INT('G'), INT('L')},
-    {INT('H'), INT('D')},
-    {INT('I'), INT('P')},
-    {INT('J'), INT('X')},
-    {INT('K'), INT('N')},
-    {INT('L'), INT('G')},
-    {INT('M'), INT('O')},
-    {INT('N'), INT('K')},
-    {INT('O'), INT('M')},
-    {INT('P'), INT('I')},
-    {INT('Q'), INT('E')},
-    {INT('R'), INT('B')},
-    {INT('S'), INT('F')},
-    {INT('T'), INT('Z')},
-    {INT('U'), INT('C')},
-    {INT('V'), INT('W')},
-    {INT('W'), INT('V')},
-    {INT('X'), INT('J')},
-    {INT('Y'), INT('A')},
-    {INT('Z'), INT('T')}
+int reflector[LETTERS] {
+    INT('Y'), // A => Y
+    INT('R'), // B => R
+    INT('U'), // C => U
+    INT('H'), // D => H
+    INT('Q'), // E => Q
+    INT('S'), // F => S
+    INT('L'), // G => L
+    INT('D'), // H => D
+    INT('P'), // I => P
+    INT('X'), // J => X
+    INT('N'), // K => N
+    INT('G'), // L => G
+    INT('O'), // M => O
+    INT('K'), // N => K
+    INT('M'), // O => M
+    INT('I'), // P => I
+    INT('E'), // Q => E
+    INT('B'), // R => B
+    INT('F'), // S => F
+    INT('Z'), // T => Z
+    INT('C'), // U => C
+    INT('W'), // V => W
+    INT('V'), // W => V
+    INT('J'), // X => J
+    INT('A'), // Y => A
+    INT('T')  // Z => T
 };

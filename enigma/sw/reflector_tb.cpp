@@ -1,5 +1,6 @@
-#include <stdio.h>
+#include "globals.h"
 #include "reflector.h"
+#include <stdio.h>
 
 // Test that the path through the reflector is the same both ways,
 // e.g. if A => Y, then Y => A should also be true
@@ -7,7 +8,8 @@ bool test_reflector_consistency()
 {
     printf("\nTesting reflector consistency:\n");
     bool success = true;
-    for (const auto& [key, value] : reflector) {
+    for (int key=0; key<LETTERS; key++) {
+        int value = reflector[key];
         if (key != reflector[value]) {
             printf("ERROR: %d => %d, but not %d => %d. ", key, value, value, key);
             printf("Actual %d => %d\n", value, reflector[value]);
