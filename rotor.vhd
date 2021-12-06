@@ -11,7 +11,7 @@ entity rotor is
     );
 end rotor;
 
-architecture Behavioral of rotor is
+architecture arch of rotor is
     constant LETTERS: integer := 26;
     signal rotate1, rotate_back1, rotate2, rotate_back2: std_logic_vector(addr_in1'length downto 0);
     signal index_signal: std_logic_vector(4 downto 0);
@@ -36,4 +36,4 @@ begin
     rom_addr2 <= rotate2(4 downto 0);
     rotate_back2 <= std_logic_vector((unsigned('0'&rom_data2) + (LETTERS - unsigned(index_signal))) mod LETTERS);
     addr_out2 <= rotate_back2(4 downto 0);
-end Behavioral;
+end arch;

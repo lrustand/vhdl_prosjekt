@@ -8,7 +8,7 @@ entity rotor_rom_IV is
     );
 end rotor_rom_IV;
 
-architecture Behavioral of rotor_rom_IV is
+architecture arch of rotor_rom_IV is
     type rom_type is array(0 to 25)
         of std_logic_vector(4 downto 0);
     -- ROM definition
@@ -71,4 +71,4 @@ architecture Behavioral of rotor_rom_IV is
 begin
    data1 <= ROM1(to_integer(unsigned(addr1)));
    data2 <= ROM2(to_integer(unsigned(addr2)));
-end Behavioral;
+end arch;

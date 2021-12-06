@@ -6,7 +6,7 @@ entity five_bit_to_ascii_tb is
 --  Port ( );
 end five_bit_to_ascii_tb;
 
-architecture Behavioral of five_bit_to_ascii_tb is
+architecture arch of five_bit_to_ascii_tb is
     constant clk_period: time:=10 ns;
 
     component five_bit_to_ascii
@@ -46,4 +46,4 @@ begin
         wait;
     end process;
 
-end Behavioral;
+end arch;
