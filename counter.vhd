@@ -4,7 +4,7 @@ use ieee.numeric_std.all;
 
 
 entity counter is
-    Port ( 
+    Port (
         clk, rst: in std_logic;
         cnt: out std_logic_vector);
 end counter;

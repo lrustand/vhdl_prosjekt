@@ -4,7 +4,7 @@ use ieee.numeric_std.all;
 
 entity rotor_rom_I is
     port(addr1, addr2: in std_logic_vector(4 downto 0);
-         data1, data2: out std_logic_vector(4 downto 0)    
+         data1, data2: out std_logic_vector(4 downto 0)
     );
 end rotor_rom_I;
 
