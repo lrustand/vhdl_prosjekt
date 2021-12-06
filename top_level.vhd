@@ -15,9 +15,7 @@ architecture arch of top_level is
     signal plugboard_out     : std_logic_vector(4 downto 0);
     signal five_bit_in       : std_logic_vector(4 downto 0);
     signal ascii_out         : std_logic_vector(7 downto 0);
-
     signal cnt_out           : std_logic_vector(4 downto 0);
-    signal wr                : std_logic;
 
     signal input_char        : std_logic_vector(7 downto 0);
     signal rx_done           : std_logic;
@@ -80,7 +78,7 @@ begin
 
 -- ASCII converter (to ASCII)
     five_bit_to_ascii: entity work.five_bit_to_ascii(arch)
-        port map(clk => clk, five_bit_in => plugboard_out, ascii_out => ascii_out);
+        port map(five_bit_in => plugboard_out, ascii_out => ascii_out);
 
 -- Loopback register
     loopback_reg: entity work.reg5(arch)
@@ -134,7 +132,7 @@ begin
 
 -- RAM
     ram: entity work.ram(arch)
-        port map(clk => clk, addr => cnt_out, din => ram_in, dout => ram_out, wr => ram_write);
+        port map(addr => cnt_out, din => ram_in, dout => ram_out, wr => ram_write);
 
 -- Mod-m counter
     modm_cnt: entity work.mod_m_counter(arch)

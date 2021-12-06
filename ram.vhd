@@ -7,7 +7,7 @@ use ieee.numeric_std.all;
 
 entity ram is
     Port (
-        clk, wr: in std_logic;
+        wr: in std_logic;
         addr, din: in std_logic_vector;
         dout: out std_logic_vector );
 end ram;
