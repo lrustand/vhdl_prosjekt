@@ -12,9 +12,10 @@ rotor::rotor(int* arr)
         inv[arr[i]] = i;
     }
 }
+
 rotor::rotor(int rotor_number)
 {
-    if ((rotor_number > 5) && (rotor_number < 0)){
+    if ((rotor_number > 5) || (rotor_number < 0)){
         rotor_number = 0;
     }
 
@@ -25,21 +26,18 @@ rotor::rotor(int rotor_number)
     }
 }
 
-void
-rotor::inc()
+void rotor::inc()
 {
     index++;
     index %= LETTERS;
 }
 
-int
-rotor::lookup(int x)
+int rotor::lookup(int x)
 {
     return (arr[(x + index)%LETTERS] + LETTERS - index)%LETTERS;
 }
 
-int
-rotor::reverse_lookup(int x)
+int rotor::reverse_lookup(int x)
 {
     return (inv[(x + index)%LETTERS] + LETTERS - index)%LETTERS;
 }

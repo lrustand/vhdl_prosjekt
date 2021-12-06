@@ -3,7 +3,7 @@
 #include "rotor.h"
 
 
-class top_level
+class enigma
 {
     private:
         rotor rotor_i;
@@ -12,7 +12,7 @@ class top_level
         int message_length;
 
     public:
-        top_level();
+        enigma();
         char encode_received_letter(const int character);
         void increment_rotors();
         void reset();
