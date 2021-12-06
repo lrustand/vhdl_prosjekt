@@ -9,7 +9,7 @@ entity ascii_to_five_bit is
         converted_ascii: out std_logic_vector(4 downto 0));
 end ascii_to_five_bit;
 
-architecture Behavioral of ascii_to_five_bit is
+architecture arch of ascii_to_five_bit is
 begin
     process(clk)
     begin
@@ -20,4 +20,4 @@ begin
         end if;
     end process;
 
-end Behavioral;
+end arch;

@@ -3,13 +3,13 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 
-entity enigma_counter is
+entity counter is
     Port ( 
         clk, rst: in std_logic;
         cnt: out std_logic_vector);
-end enigma_counter;
+end counter;
 
-architecture Behavioral of enigma_counter is
+architecture arch of counter is
     signal counter: unsigned(cnt'length - 1 downto 0);
 begin
     process(clk, rst)
@@ -22,4 +22,4 @@ begin
     end process;
     cnt <= std_logic_vector(counter);
 
-end Behavioral;
+end arch;

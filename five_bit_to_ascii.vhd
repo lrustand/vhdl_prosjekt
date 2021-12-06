@@ -9,8 +9,8 @@ entity five_bit_to_ascii is
         ascii_out: out std_logic_vector(7 downto 0));
 end five_bit_to_ascii;
 
-architecture Behavioral of five_bit_to_ascii is
+architecture arch of five_bit_to_ascii is
 begin
     ascii_out<="011" & std_logic_vector(unsigned(five_bit_in) + "1");
 
-end Behavioral;
+end arch;
