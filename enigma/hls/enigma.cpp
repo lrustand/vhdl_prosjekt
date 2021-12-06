@@ -1,12 +1,12 @@
 #include <iostream>
 #include <stdio.h>
-#include "top_level.h"
+#include "enigma.h"
 #include "plugboard.h"
 #include "ascii_converter.h"
 #include "reflector.h"
 
 
-top_level::top_level()
+enigma::enigma()
 {
     rotor_i = rotor(0);
     rotor_j = rotor(2);
@@ -14,7 +14,7 @@ top_level::top_level()
     message_length = 0;
 }
 
-char top_level::encode_received_letter(const int character)
+char enigma::encode_received_letter(const int character)
 {
     int from_plugboard = plugboard[character];
     int rotor_output_i = rotor_i.lookup(from_plugboard);
@@ -25,13 +25,13 @@ char top_level::encode_received_letter(const int character)
     int loopback_output_j = rotor_j.reverse_lookup(loopback_output_k);
     int loopback_output_i = rotor_i.reverse_lookup(loopback_output_j);
 
-    top_level::increment_rotors();
+    enigma::increment_rotors();
     int back_from_plugboard = plugboard[loopback_output_i];
     return ascii_converter::to_ascii(back_from_plugboard);
 
 }
 
-void top_level::increment_rotors()
+void enigma::increment_rotors()
 {
     rotor_i.inc();
     if(rotor_i.index == 0){
@@ -42,7 +42,7 @@ void top_level::increment_rotors()
     }
 }
 
-void top_level::reset()
+void enigma::reset()
 {
     rotor_i.index = 0;
     rotor_j.index = 0;
