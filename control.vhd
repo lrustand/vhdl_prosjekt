@@ -35,6 +35,7 @@ architecture arch of control_path is
         LOOPBACK,
         STORE,
         ENDLINE,
+        BYPASS,
         TX_START,
         TX_WAIT
     );
@@ -42,6 +43,7 @@ architecture arch of control_path is
 begin
     process(clk)
     begin
+        if rising_edge(clk) then
         tx_en <= '0';
         ram_cnt_clr <= '0';
         ram_cnt_inc <= '0';
@@ -51,29 +53,34 @@ begin
         rotor_j_shift <= '0';
         rotor_k_shift <= '0';
         rotors_rst <= '0';
-        if rising_edge(clk) then
+
         if state = INIT then
             bypass_mux <= '0';
             rotors_rst <= '1';
             ram_cnt_clr <= '1';
             state <= READ;
+
         elsif state = READ then
             loopback_mux <= '0';
             if rx_done = '1' then
                 if (input_char >= x"41" and input_char <= x"5a") or
                    (input_char >= x"61" and input_char <= x"7a") then
-
                     bypass_mux <= '0';
                     state <= LOOPBACK;
                 elsif input_char = x"0d" then -- Enter
                     bypass_mux <= '1';
                     state <= ENDLINE;
+                else -- Others
+                    bypass_mux <= '1';
+                    state <= BYPASS;
                 end if;
             end if;
+
         elsif state = LOOPBACK then
             loopback_mux <= '1';
             loopback_reg_load <= '1';
             state <= STORE;
+
         elsif state = STORE then
             ram_write <= '1';
             ram_cnt_inc <= '1';
@@ -85,10 +92,17 @@ begin
                 end if;
             end if;
             state <= READ;
+
         elsif state = ENDLINE then
             ram_write <= '1';
             ram_cnt_clr <= '1';
             state <= TX_START;
+
+        elsif state = BYPASS then
+            ram_write <= '1';
+            ram_cnt_inc <= '1';
+            state <= READ;
+
         elsif state = TX_START then
             tx_en <= '1';
             if ram_char = x"0d" then
@@ -96,6 +110,7 @@ begin
             else
                 state <= TX_WAIT;
             end if;
+
         elsif state = TX_WAIT then
             if tx_done = '1' then
                 state <= TX_START;
