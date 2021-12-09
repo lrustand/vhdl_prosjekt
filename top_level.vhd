@@ -62,7 +62,7 @@ begin
     -- Loopback
     plugboard_in <= converted_ascii when loopback_mux = '0' else loopback_reg_out;
     -- Bypass
-    ram_in <= ascii_out when bypass_mux = '0' else "000"&converted_ascii;
+    ram_in <= ascii_out when bypass_mux = '0' else input_char;
 
 -- Control path
     control: entity work.control_path(arch)
@@ -74,7 +74,7 @@ begin
 
 -- ASCII converter (to five bit)
     ascii_to_five_bit: entity work.ascii_to_five_bit(arch)
-        port map(clk => clk, ascii_in => input_char, converted_ascii => converted_ascii);
+        port map(ascii_in => input_char, converted_ascii => converted_ascii);
 
 -- ASCII converter (to ASCII)
     five_bit_to_ascii: entity work.five_bit_to_ascii(arch)
