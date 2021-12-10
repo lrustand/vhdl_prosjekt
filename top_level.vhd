@@ -83,7 +83,7 @@ begin
 -- Loopback register
     loopback_reg: entity work.reg5(arch)
         port map(load => loopback_reg_load, din => rotor_i_to_loopback_reg, dout => loopback_reg_out,
-                  clk =>clk, rst=>rst, clr=>'0');
+                 rst => rst);
 
 -- Plugboard
     plugboard: entity work.plugboard(arch)
