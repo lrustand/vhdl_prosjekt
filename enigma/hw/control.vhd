@@ -6,6 +6,7 @@ entity control_path is
     port (
         clk: in std_logic;
         input_char: in std_logic_vector(7 downto 0);
+        ram_char: in std_logic_vector(7 downto 0);
         rx_done: in std_logic;
         tx_done: in std_logic;
         rotor_i_cnt: in std_logic_vector(4 downto 0);
@@ -34,6 +35,7 @@ architecture arch of control_path is
         LOOPBACK,
         STORE,
         ENDLINE,
+        BYPASS,
         TX_START,
         TX_WAIT
     );
@@ -41,6 +43,7 @@ architecture arch of control_path is
 begin
     process(clk)
     begin
+        if rising_edge(clk) then
         tx_en <= '0';
         ram_cnt_clr <= '0';
         ram_cnt_inc <= '0';
@@ -56,23 +59,28 @@ begin
             rotors_rst <= '1';
             ram_cnt_clr <= '1';
             state <= READ;
+
         elsif state = READ then
             loopback_mux <= '0';
             if rx_done = '1' then
                 if (input_char >= x"41" and input_char <= x"5a") or
                    (input_char >= x"61" and input_char <= x"7a") then
-
                     bypass_mux <= '0';
                     state <= LOOPBACK;
                 elsif input_char = x"0d" then -- Enter
                     bypass_mux <= '1';
                     state <= ENDLINE;
+                else -- Others
+                    bypass_mux <= '1';
+                    state <= BYPASS;
                 end if;
             end if;
+
         elsif state = LOOPBACK then
             loopback_mux <= '1';
             loopback_reg_load <= '1';
             state <= STORE;
+
         elsif state = STORE then
             ram_write <= '1';
             ram_cnt_inc <= '1';
@@ -84,22 +92,32 @@ begin
                 end if;
             end if;
             state <= READ;
+
         elsif state = ENDLINE then
             ram_write <= '1';
             ram_cnt_clr <= '1';
             state <= TX_START;
+
+        elsif state = BYPASS then
+            ram_write <= '1';
+            ram_cnt_inc <= '1';
+            state <= READ;
+
         elsif state = TX_START then
             tx_en <= '1';
-            ram_cnt_inc <='1';
-            if input_char = x"0d" then
+            if ram_char = x"0d" then
                 state <= INIT;
             else
                 state <= TX_WAIT;
             end if;
+
         elsif state = TX_WAIT then
             if tx_done = '1' then
                 state <= TX_START;
+                ram_cnt_inc <= '1';
             end if;
+            tx_en <= '1';
+        end if;
         end if;
     end process;
 end arch;

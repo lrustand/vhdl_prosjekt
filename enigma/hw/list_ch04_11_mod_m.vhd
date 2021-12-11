@@ -8,7 +8,7 @@ entity mod_m_counter is
       M: integer := 326     -- mod-M (19.200 bps)
   );
    port(
-      clk, reset: in std_logic;
+      clk, rst: in std_logic;
       max_tick: out std_logic
    );
 end mod_m_counter;
@@ -18,9 +18,9 @@ architecture arch of mod_m_counter is
    signal r_next: unsigned(N-1 downto 0);
 begin
    -- register
-   process(clk,reset)
+   process(clk,rst)
    begin
-      if (reset='1') then
+      if (rst='1') then
          r_reg <= (others=>'0');
       elsif (clk'event and clk='1') then
          r_reg <= r_next;

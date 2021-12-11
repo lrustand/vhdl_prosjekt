@@ -8,7 +8,7 @@ entity uart_tx is
       SB_TICK: integer:=16  -- # ticks for stop bits
    );
    port(
-      clk, reset: in std_logic;
+      clk, rst: in std_logic;
       tx_start: in std_logic;
       s_tick: in std_logic;
       din: in std_logic_vector(7 downto 0);
@@ -26,9 +26,9 @@ architecture arch of uart_tx is
    signal tx_reg, tx_next: std_logic;
 begin
    -- FSMD state & data registers
-   process(clk,reset)
+   process(clk,rst)
    begin
-      if reset='1' then
+      if rst='1' then
          state_reg <= idle;
          s_reg <= (others=>'0');
          n_reg <= (others=>'0');

@@ -4,11 +4,11 @@ use ieee.numeric_std.all;
 
 entity rotor_rom_II is
     port(addr1, addr2: in std_logic_vector(4 downto 0);
-         data1, data2: out std_logic_vector(4 downto 0)    
+         data1, data2: out std_logic_vector(4 downto 0)
     );
 end rotor_rom_II;
 
-architecture Behavioral of rotor_rom_II is
+architecture arch of rotor_rom_II is
     type rom_type is array(0 to 25)
         of std_logic_vector(4 downto 0);
     -- ROM definition
@@ -71,4 +71,4 @@ architecture Behavioral of rotor_rom_II is
 begin
    data1 <= ROM1(to_integer(unsigned(addr1)));
    data2 <= ROM2(to_integer(unsigned(addr2)));
-end Behavioral;
+end arch;
