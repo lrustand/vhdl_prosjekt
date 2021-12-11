@@ -27,16 +27,34 @@ rotor::rotor(int rotor_number)
 
 void rotor::inc()
 {
-    index++;
-    index %= LETTERS;
+    if (index >= LETTERS-1)
+        index = 0;
+    else
+        index++;
 }
 
 int rotor::lookup(int x)
 {
-    return (arr[(x + index)%LETTERS] + LETTERS - index)%LETTERS;
+    int rotated_address = index + x;
+    if (rotated_address >= LETTERS)
+        rotated_address -= LETTERS;
+    
+    int character = arr[rotated_address] - index;
+    if (character < 0)
+        character += LETTERS;
+    
+    return character;
 }
 
 int rotor::reverse_lookup(int x)
 {
-    return (inv[(x + index)%LETTERS] + LETTERS - index)%LETTERS;
+    int rotated_address = index + x;
+    if (rotated_address >= LETTERS)
+        rotated_address -= LETTERS;
+    
+    int character = inv[rotated_address] - index;
+    if (character < 0)
+        character += LETTERS;
+    
+    return character;
 }
