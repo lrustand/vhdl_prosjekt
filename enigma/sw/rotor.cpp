@@ -38,11 +38,11 @@ int rotor::lookup(int x)
     int rotated_address = index + x;
     if (rotated_address >= LETTERS)
         rotated_address -= LETTERS;
-    
+
     int character = arr[rotated_address] - index;
     if (character < 0)
         character += LETTERS;
-    
+
     return character;
 }
 
@@ -51,10 +51,10 @@ int rotor::reverse_lookup(int x)
     int rotated_address = index + x;
     if (rotated_address >= LETTERS)
         rotated_address -= LETTERS;
-    
+
     int character = inv[rotated_address] - index;
     if (character < 0)
         character += LETTERS;
-    
+
     return character;
 }
