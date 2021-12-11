@@ -1,7 +1,5 @@
 #include "enigma.h"
 #include "ascii_converter.h"
-#include <vector>
-
 
 int main(int argc, char const *argv[])
 {
