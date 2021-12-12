@@ -8,5 +8,3 @@ leaq	plugboard(%rip), %rax
 movl	(%rdx,%rax), %eax
 popq	%rbp
 ret
-
-# 9 instructions plus ret

@@ -23,5 +23,5 @@ nop
 popq	%rbp
 ret
 
-#12 instruksjoner + ret
-#Hvorav enten 3 eller 2 blir hoppet over basert paa if-statement
+#12 instructions + ret
+#Where either 3 or 2 are skipped based on if-statement

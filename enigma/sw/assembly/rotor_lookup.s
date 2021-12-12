@@ -27,5 +27,5 @@ movl	-4(%rbp), %eax
 popq	%rbp
 ret
 
-# 23 instruksjoner pluss ret
-# Hvorav 0, 1 eller 2 hoppes over
+# 23 instructions plus ret
+# Where 0, 1 or 2 are skipped
