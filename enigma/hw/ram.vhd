@@ -1,6 +1,3 @@
--- (adapted from) Listing 11.1
--- Single-port RAM
--- Modified from XST 8.1i rams_07
 library IEEE;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
